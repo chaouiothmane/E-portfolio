@@ -1,0 +1,159 @@
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E-Portfolio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="profile-card">
+          <div class="profile-photo" id="profile-photo-preview" title="Profile photo">
+            <img id="profile-photo-img" alt="Profile photo" src="img/picofme.jpg">
+          </div>
+          <h1 id="site-title" contenteditable="false">Othmane Chaoui Kouraichi</h1>
+          <p id="site-subtitle" contenteditable="false">Engineering student</p>
+          
+          </div>
+        </div>
+      </div>
+    
+  </header>
+
+  <nav class="main-nav" role="navigation" aria-label="Primary">
+    <ul>
+      <li><a href="#" data-tab="home" class="active">Home</a></li>
+      <li><a href="#" data-tab="engineering">Engineering Courses</a></li>
+      <li><a href="#" data-tab="mobility">Mobility</a></li>
+      <li><a href="#" data-tab="civic">Civic Engagement</a></li>
+      <li><a href="#" data-tab="sports">Sports &amp; Activities</a></li>
+      <li><a href="#" data-tab="career">Career Development</a></li>
+    </ul>
+  </nav>
+
+  <main id="content">
+    <!-- Home -->
+    <section id="home" class="tab-panel">
+      <h2 class="editable" data-key="home_title">Welcome — About Me</h2>
+      <div class="editable rich" data-key="home_intro"><p>Hello — I'm <strong>Othmane Chaoui Kouraichi</strong>, a Moroccan student currently in ENSEEIHT Toulouse. I am passionate about applied mathematics, machine learning and computer vision. Feel free to discover my e-portfolio.</p></div>
+
+      <div class="media-row">
+        <div class="media-card">
+          <h3>Unique Value Pitch</h3>
+          <video controls="" src="UVP.mp4"></video>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering Courses -->
+    <section id="engineering" class="tab-panel" hidden="">
+      <h2 class="editable" data-key="eng_title">Engineering Courses &amp; Projects</h2>
+
+      <div class="card">
+        <div class="card-body editable rich" data-key="eng_content"><p><strong>TIPE — Face data, PCA &amp; CNNs</strong></p>
+<p><strong>TIPE topic (2025):</strong>&nbsp;"How to transform raw facial data into a reduced space (PCA) for efficient transition to classification models, and convert that information into actionable neurological diagnostics?" — I explored PCA, feature distances and application to facial-based diagnostics, and I demonstrated a pipeline from preprocessing to model evaluation.</p><p><br></p><p>Project summary: I modeled convolutional neural networks for facial recognition and investigate dimensionality reduction (PCA) as a preprocessing step to make classification more robust and computationally efficient. I studied distance metrics in the reduced space and evaluated how those features can contribute to neurological diagnostics. The work combines mathematical analysis, implementation in Python, and empirical evaluation on curated datasets.</p>
+<p>My role was to design and implementation (data pipeline, PCA, CNN design, training, and evaluation), plus writing the final report and preparing the oral presentation (13–15 minutes).</p><p><br></p></div>
+      </div>
+    </section>
+
+    <!-- Mobility -->
+    <section id="mobility" class="tab-panel" hidden="">
+      <h2 class="editable" data-key="mob_title">Mobility (Study / Exchange)</h2>
+      <div class="editable rich" data-key="mob_content">After two intense and rewarding years in a Moroccan prep school, where I immersed myself in a rigorous academic program, I am now continuing my educational journey in France.&nbsp;<br>Now, with France as my new base, my mind is already wandering to the possibilities of European mobility ( Germany , Italy ...)<div><br></div><div><br></div><div><br></div></div>
+    </section>
+
+    <!-- Civic Engagement -->
+    <section id="civic" class="tab-panel" hidden="">
+      <h2 class="editable" data-key="civic_title">Civic Engagement</h2>
+      <div class="editable rich" data-key="civic_content"><p>I provide unofficial high-school math tutoring to peers and junior students. Tutoring helps reinforce my own understanding and gives me experience explaining technical concepts clearly.&nbsp;</p><p>I also participated in the 'Climate Fresk' workshop. It's an excellent initiative because raising awareness about environmental issues is crucial. It helps everyone understand the scale of the climate crisis and empowers us to take meaningful action for a more sustainable future.</p><p><br></p></div>
+    </section>
+
+    <!-- Sports & Activities -->
+    <section id="sports" class="tab-panel" hidden="">
+      <h2 class="editable" data-key="sports_title">Sports &amp; Other Activities</h2>
+      <div class="editable rich" data-key="sports_content"><p>I am a member of the <strong>Run7</strong> running club: we train 2–3 times per week and prepare for races together. Running helps clear my mind, manage stress during exam periods and improves concentration for long coding sessions. I also enjoy cinema and cooking in my free time.I also participate in student coding events (e.g., Thales BattleDev) where we collaborate on timed algorithmic challenges.</p>
+<p>I have a calm tabby cat named <strong>Neil</strong> who keeps me company.</p><p><br></p></div>
+    </section>
+
+    <!-- Career Development -->
+    <section id="career" class="tab-panel" hidden="">
+      <h2 class="editable" data-key="career_title">Career Development</h2>
+      <div class="editable rich" data-key="career_content">
+</div>
+
+<div class="editable rich" data-key="career_content"><p>I am exploring internships and research opportunities in machine learning, computer vision, and software engineering. Short-term goals: secure a summer research internship or an industrial internship related to AI. Long-term: work as an AI engineer or pursue graduate studies in machine learning.</p><p>Also I plan to pursue the modIA option in second year to work toward a double diploma (Digital Sciences &amp; Applied Maths). I aim for a career in computer science and AI research/engineering.</p></div>
+
+
+<button id="cv-fr-download" style="display: inline-block;">Download CV (FR)</button>
+
+
+<button id="cv-en-download" style="display: inline-block;">Download CV (EN)</button>
+
+<script>
+function savePDF(event, storageKey) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    localStorage.setItem(storageKey, e.target.result); // base64 store
+    updateDownloadButton(storageKey);
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateDownloadButton(storageKey) {
+  const data = localStorage.getItem(storageKey);
+  const btnId = storageKey === 'career_cv_fr' ? 'cv-fr-download' : 'cv-en-download';
+  const btn = document.getElementById(btnId);
+  if (data) {
+    btn.style.display = 'inline-block';
+    btn.onclick = function() {
+      const a = document.createElement('a');
+      a.href = data;
+      a.download = storageKey + '.pdf';
+      a.click();
+    };
+  }
+}
+
+// restore on load
+updateDownloadButton('career_cv_fr');
+updateDownloadButton('career_cv_en');
+</script>
+
+      <label for="linkedin">LinkedIn profile :</label>
+      <a href="https://www.linkedin.com/in/othmane-chaoui-kouraichi">Visit my linkedin</a>
+    </section>
+  </main>
+
+  <!-- Floating contact card (bottom-right) -->
+  <aside id="contact-card" class="contact-card">
+    <div>
+      <strong>Contact</strong>
+      <div class="contact-field">
+        <label class="small muted">📧Email</label>
+        <div contenteditable="false" id="contact-email" data-key="contact_email" class="contact-value">othmane.chaouikouraichi@etu.inp-n7.fr</div>
+      </div>
+      <div class="contact-field">
+        <label class="small muted">📞Phone</label>
+        <div contenteditable="false" id="contact-phone" data-key="contact_phone" class="contact-value">+33 7 66 08 49 28</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Lightbox modal for images/videos -->
+  <div id="lightbox" class="lightbox" hidden="">
+    <button id="lightbox-close" class="lightbox-close">×</button>
+    <div id="lightbox-content" class="lightbox-content"></div>
+  </div>
+
+  <footer class="site-footer">
+  </footer>
+
+  <script src="script.js"></script>
+
+</body></html>

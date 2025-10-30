@@ -38,6 +38,7 @@
   // Defaults (English)
   const defaults = {
     site_title: 'My E-Portfolio',
+    site_subtitle: 'Engineering student',
     home_title: 'Welcome — Introduction',
     home_intro: `<p>Hello — I'm <strong>Othmane Chaoui Kouraichi</strong>, a Moroccan student currently in ENSEEIHT Toulouse. I am passionate about applied mathematics, machine learning and computer vision. Feel free to discover my e-portfolio.</p>`,
     eng_title: 'Engineering Courses & Projects',

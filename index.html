@@ -1,598 +1,232 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Othmane Chaoui Kouraichi</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #f8f7f4;
-      --surface: #ffffff;
-      --ink: #0f0f0e;
-      --muted: #787874;
-      --subtle: #b0afa9;
-      --accent2: #c8441a;
-      --line: #e6e4de;
-      --tag: #eeecea;
-      --nav-h: 68px;
-      --max: 960px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.7;
-    }
-
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--subtle); border-radius: 3px; }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: var(--nav-h);
-      background: rgba(248,247,244,0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--line);
-      display: flex; align-items: center;
-    }
-    .nav-inner {
-      max-width: var(--max); margin: 0 auto; padding: 0 32px;
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo {
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
-      letter-spacing: 0.02em; color: var(--ink); text-decoration: none;
-    }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
-      font-size: 13.5px; font-weight: 400; color: var(--muted);
-      text-decoration: none; letter-spacing: 0.01em; transition: color 0.2s;
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
-    .nav-links a.active { font-weight: 500; }
-
-    /* LAYOUT */
-    main { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
-
-    /* HERO */
-    .hero {
-      padding-top: calc(var(--nav-h) + 96px); padding-bottom: 96px;
-      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start;
-      border-bottom: 1px solid var(--line);
-    }
-    .hero-label {
-      font-size: 12px; font-weight: 500; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--accent2); margin-bottom: 20px;
-    }
-    .hero-name {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(36px, 5vw, 58px); line-height: 1.08;
-      letter-spacing: -0.02em; color: var(--ink); margin-bottom: 24px;
-    }
-    .hero-name span { color: var(--accent2); }
-    .hero-desc {
-      font-size: 16px; color: var(--muted); max-width: 480px;
-      line-height: 1.75; font-weight: 300; margin-bottom: 36px;
-    }
-    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .hero-tag {
-      font-size: 12px; background: var(--tag); color: var(--muted);
-      border-radius: 20px; padding: 5px 14px; font-weight: 400;
-    }
-    .hero-right {
-      display: flex; flex-direction: column; align-items: flex-end;
-      gap: 16px; padding-top: 8px;
-    }
-    .hero-photo {
-      width: 128px; height: 128px; border-radius: 50%;
-      border: 3px solid var(--line); background: var(--tag);
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden; font-size: 52px;
-    }
-    .hero-status {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 12.5px; color: var(--muted);
-    }
-    .dot {
-      width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
-
-    /* SECTIONS */
-    section { padding: 80px 0; border-bottom: 1px solid var(--line); }
-    section:last-child { border-bottom: none; }
-    .section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 48px; }
-    .section-number {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent2);
-    }
-    .section-title {
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 26px;
-      letter-spacing: -0.01em;
-    }
-
-    /* ABOUT */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
-    .about-text p {
-      color: var(--muted); font-size: 15px; font-weight: 300;
-      margin-bottom: 16px; line-height: 1.8;
-    }
-    .about-text p strong { color: var(--ink); font-weight: 500; }
-    .about-facts { display: flex; flex-direction: column; gap: 20px; }
-    .fact { display: flex; flex-direction: column; gap: 2px; }
-    .fact-label {
-      font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--subtle); font-weight: 500;
-    }
-    .fact-value { font-size: 15px; color: var(--ink); font-weight: 400; }
-
-    /* SKILLS */
-    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .skill-group {
-      background: var(--surface); border: 1px solid var(--line);
-      border-radius: 12px; padding: 24px; transition: border-color 0.2s;
-    }
-    .skill-group:hover { border-color: var(--subtle); }
-    .skill-group-title {
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
-      margin-bottom: 14px;
-    }
-    .skill-pills { display: flex; flex-wrap: wrap; gap: 7px; }
-    .skill-pill {
-      font-size: 12.5px; background: var(--tag); color: var(--ink);
-      border-radius: 6px; padding: 4px 10px; font-weight: 400;
-    }
-
-    /* PROJECTS */
-    .projects-list { display: flex; flex-direction: column; }
-    .project-item {
-      display: grid; grid-template-columns: 1fr auto; gap: 32px;
-      align-items: start; padding: 28px 0; border-bottom: 1px solid var(--line);
-    }
-    .project-item:first-child { padding-top: 0; }
-    .project-item:last-child { border-bottom: none; }
-    .project-meta {
-      font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--subtle); margin-bottom: 8px;
-    }
-    .project-name {
-      font-family: 'Syne', sans-serif; font-size: 19px;
-      font-weight: 700; margin-bottom: 10px; color: var(--ink);
-    }
-    .project-desc {
-      font-size: 14px; color: var(--muted); font-weight: 300;
-      line-height: 1.75; max-width: 560px;
-    }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-    .project-tag {
-      font-size: 11.5px; background: var(--tag); color: var(--muted);
-      border-radius: 4px; padding: 3px 9px;
-    }
-    .project-year { font-size: 13px; color: var(--subtle); font-weight: 300; white-space: nowrap; padding-top: 4px; }
-
-    /* EXPERIENCE */
-    .exp-list { display: flex; flex-direction: column; }
-    .exp-item {
-      display: grid; grid-template-columns: 160px 1fr; gap: 32px;
-      padding: 28px 0; border-bottom: 1px solid var(--line);
-    }
-    .exp-item:first-child { padding-top: 0; }
-    .exp-item:last-child { border-bottom: none; }
-    .exp-date { font-size: 12.5px; color: var(--subtle); font-weight: 300; padding-top: 3px; }
-    .exp-role { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-    .exp-org { font-size: 13.5px; color: var(--accent2); font-weight: 500; margin-bottom: 10px; }
-    .exp-desc { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.75; }
-
-    /* CONTACT */
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .contact-cta {
-      font-family: 'Syne', sans-serif; font-size: clamp(22px, 3vw, 32px);
-      font-weight: 700; line-height: 1.3; margin-bottom: 20px;
-    }
-    .contact-sub { font-size: 14.5px; color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 32px; }
-    .cv-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
-    .cv-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500;
-      padding: 11px 22px; border-radius: 8px; text-decoration: none;
-      transition: all 0.2s; cursor: pointer; border: none;
-    }
-    .cv-btn-primary { background: var(--ink); color: #fff; }
-    .cv-btn-primary:hover { background: #2a2a28; transform: translateY(-1px); }
-    .cv-btn-secondary { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
-    .cv-btn-secondary:hover { border-color: var(--subtle); transform: translateY(-1px); }
-    .contact-links { display: flex; flex-direction: column; gap: 14px; }
-    .contact-link {
-      display: flex; align-items: center; gap: 14px; text-decoration: none;
-      color: var(--ink); font-size: 14.5px; padding: 16px 20px;
-      background: var(--surface); border: 1px solid var(--line);
-      border-radius: 10px; transition: border-color 0.2s, transform 0.2s;
-    }
-    .contact-link:hover { border-color: var(--subtle); transform: translateX(4px); }
-    .contact-link-icon {
-      width: 36px; height: 36px; background: var(--tag); border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; flex-shrink: 0;
-    }
-    .contact-link-text { display: flex; flex-direction: column; gap: 1px; }
-    .contact-link-label { font-size: 11px; color: var(--subtle); text-transform: uppercase; letter-spacing: 0.08em; }
-    .contact-link-value { font-size: 14px; font-weight: 400; }
-
-    /* FOOTER */
-    footer {
-      max-width: var(--max); margin: 0 auto; padding: 32px 32px 48px;
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 12.5px; color: var(--subtle);
-    }
-
-    /* ANIMATIONS */
-    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    /* MOBILE */
-    @media (max-width: 720px) {
-      main { padding: 0 20px; }
-      .hero { grid-template-columns: 1fr; padding-top: calc(var(--nav-h) + 56px); padding-bottom: 56px; }
-      .hero-right { align-items: flex-start; flex-direction: row; }
-      .about-grid, .skills-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
-      .exp-item { grid-template-columns: 1fr; gap: 4px; }
-      .project-item { grid-template-columns: 1fr; }
-      .nav-links { gap: 18px; }
-      .nav-links a { font-size: 12px; }
-      footer { flex-direction: column; gap: 8px; text-align: center; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Othmane Chaoui Kouraichi — E-portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8f7f4;--surface:#fff;--ink:#0f0f0e;--muted:#787874;--subtle:#b0afa9;--accent2:#c8441a;--line:#e6e4de;--tag:#eeecea;--nav-h:68px;--max:960px}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);background:rgba(248,247,244,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center}
+.nav-inner{max-width:var(--max);margin:0 auto;padding:0 32px;width:100%;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{font-size:13.5px;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.nav-links a.active{font-weight:500}
+main{max-width:var(--max);margin:0 auto;padding:0 32px}
+.hero{padding:calc(var(--nav-h) + 96px) 0 96px;display:grid;grid-template-columns:1fr auto;gap:48px;border-bottom:1px solid var(--line)}
+.hero-label{font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:20px}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(36px,5vw,58px);line-height:1.08;letter-spacing:-.02em;margin-bottom:24px}
+.hero-name span{color:var(--accent2)}
+.hero-desc{font-size:16px;color:var(--muted);max-width:480px;font-weight:300;margin-bottom:36px}
+.hero-tags,.pills{display:flex;flex-wrap:wrap;gap:8px}
+.hero-tag{font-size:12px;background:var(--tag);color:var(--muted);border-radius:20px;padding:5px 14px}
+.hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:16px}
+.hero-photo{width:128px;height:128px;border-radius:50%;border:3px solid var(--line);background:var(--tag);display:flex;align-items:center;justify-content:center;font-size:52px}
+.hero-status{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.4}}
+section{padding:80px 0;border-bottom:1px solid var(--line)}
+section:last-child{border-bottom:none}
+.section-header{display:flex;align-items:baseline;gap:16px;margin-bottom:40px}
+.section-number{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--accent2)}
+.section-title{font-family:'Syne',sans-serif;font-weight:700;font-size:26px}
+h3.sub{font-family:'Syne',sans-serif;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:40px 0 16px}
+h3.sub:first-of-type{margin-top:0}
+.about-grid,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+.about-text p{color:var(--muted);font-size:15px;font-weight:300;margin-bottom:16px;line-height:1.8}
+.about-text strong{color:var(--ink);font-weight:500}
+.about-facts{display:flex;flex-direction:column;gap:18px}
+.fact-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);font-weight:500}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;transition:border-color .2s}
+.card:hover{border-color:var(--subtle)}
+.card.hl{border-color:var(--accent2)}
+.card-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.card p{font-size:13.5px;color:var(--muted);font-weight:300;line-height:1.65;margin-bottom:10px}
+.card p strong{color:var(--ink);font-weight:500}
+.pill{font-size:12.5px;background:var(--tag);border-radius:6px;padding:4px 10px}
+.plan-letter{font-family:'Syne',sans-serif;font-weight:800;font-size:30px;color:var(--accent2);line-height:1}
+.define{background:var(--ink);color:#fff;border-radius:12px;padding:26px 30px;font-family:'Syne',sans-serif;font-size:17px;line-height:1.5;margin-bottom:8px}
+.define small{display:block;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:10px}
+.item{display:grid;grid-template-columns:1fr auto;gap:32px;padding:28px 0;border-bottom:1px solid var(--line)}
+.item:first-child{padding-top:0}
+.item:last-child{border-bottom:none}
+.meta{font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--subtle);margin-bottom:8px}
+.name{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;margin-bottom:10px}
+.desc{font-size:14px;color:var(--muted);font-weight:300;max-width:600px}
+.desc li{margin-left:18px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tag{font-size:11.5px;background:var(--tag);color:var(--muted);border-radius:4px;padding:3px 9px}
+.year{font-size:13px;color:var(--subtle);font-weight:300;white-space:nowrap}
+.exp{display:grid;grid-template-columns:160px 1fr;gap:32px;padding:28px 0;border-bottom:1px solid var(--line)}
+.exp:first-child{padding-top:0}
+.exp:last-child{border-bottom:none}
+.exp-date{font-size:12.5px;color:var(--subtle);font-weight:300}
+.exp-role{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:4px}
+.exp-org{font-size:13.5px;color:var(--accent2);font-weight:500;margin-bottom:10px}
+.contact-cta{font-family:'Syne',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:700;line-height:1.3;margin-bottom:20px}
+.contact-sub{font-size:14.5px;color:var(--muted);font-weight:300;margin-bottom:28px}
+.btn{display:inline-block;font-size:13.5px;font-weight:500;padding:11px 22px;border-radius:8px;text-decoration:none;background:var(--ink);color:#fff;margin:0 8px 8px 0}
+.btn.sec{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.contact-links{display:flex;flex-direction:column;gap:14px}
+.contact-link{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);font-size:14px;padding:16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:10px;transition:transform .2s}
+.contact-link:hover{transform:translateX(4px)}
+.ico{width:36px;height:36px;background:var(--tag);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-link small{display:block;font-size:11px;color:var(--subtle);text-transform:uppercase;letter-spacing:.08em;line-height:1.3}
+footer{max-width:var(--max);margin:0 auto;padding:32px 32px 48px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--subtle)}
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.fade-up.visible{opacity:1;transform:none}
+@media(max-width:720px){main{padding:0 20px}.hero{grid-template-columns:1fr;padding-top:calc(var(--nav-h) + 56px)}.hero-right{align-items:flex-start;flex-direction:row}.about-grid,.contact-grid,.grid3{grid-template-columns:1fr;gap:20px}.exp,.item{grid-template-columns:1fr;gap:4px}.nav-links{gap:12px}.nav-links a{font-size:11px}footer{flex-direction:column;gap:8px;text-align:center}}
+</style>
 </head>
 <body>
+<nav><div class="nav-inner">
+<a class="nav-logo" href="#hero">Othmane C.K.</a>
+<ul class="nav-links">
+<li><a href="#about">À propos</a></li><li><a href="#ppp">Projet de carrière</a></li><li><a href="#skills">Compétences</a></li><li><a href="#projects">Projets</a></li><li><a href="#experience">Parcours</a></li><li><a href="#contact">Contact</a></li>
+</ul></div></nav>
 
-  <nav>
-    <div class="nav-inner">
-      <a class="nav-logo" href="#hero">Othmane C.K.</a>
-      <ul class="nav-links">
-        <li><a href="#about">À propos</a></li>
-        <li><a href="#skills">Compétences</a></li>
-        <li><a href="#projects">Projets</a></li>
-        <li><a href="#experience">Expériences</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+<main>
+<div class="hero" id="hero">
+<div>
+<div class="hero-label">Élève ingénieur 2A · ENSEEIHT · HPC &amp; Big Data</div>
+<h1 class="hero-name">Othmane<br><span>Chaoui</span><br>Kouraichi</h1>
+<p class="hero-desc">Passionné par les mathématiques appliquées, les statistiques et l'IA. Je vise la R&amp;D en IA / maths, avec l'envie d'utiliser ces outils au service de la santé.</p>
+<div class="hero-tags"><span class="hero-tag">Data Science</span><span class="hero-tag">Machine Learning</span><span class="hero-tag">Optimisation</span><span class="hero-tag">Python</span><span class="hero-tag">HPC &amp; Big Data</span></div>
+</div>
+<div class="hero-right"><div class="hero-photo">🎓</div><div class="hero-status"><span class="dot"></span><span>Stage d'été 2027 (3–4 mois)</span></div></div>
+</div>
 
-  <main>
+<section id="about" class="fade-up">
+<div class="section-header"><span class="section-number">01</span><h2 class="section-title">À propos</h2></div>
+<div class="about-grid">
+<div class="about-text">
+<p>Je suis <strong>Othmane Chaoui Kouraichi</strong>, étudiant marocain en <strong>2ème année du cycle ingénieur à l'ENSEEIHT (Toulouse INP)</strong>, département Sciences du Numérique, parcours <strong>HPC &amp; Big Data</strong>.</p>
+<p>Après deux années de CPGE MP à Rabat (classé top 15 %), j'ai intégré l'N7. J'aime les problèmes où les mathématiques rencontrent le calcul : réduction de dimension, optimisation, modélisation.</p>
+<p>Hors du code : bénévolat (tutorat, cafés des langues, surveillance d'examens pour étudiants en situation de handicap) et course à pied avec <strong>Run7</strong>.</p>
+</div>
+<div class="about-facts">
+<div><span class="fact-label">Formation</span>ENSEEIHT — Sciences du Numérique, HPC &amp; Big Data</div>
+<div><span class="fact-label">Langues</span>Arabe (natif) · Français C1 · Anglais B2 · Allemand A2</div>
+<div><span class="fact-label">Profil MBTI</span>ISTJ-T — méthodique, fiable, rigoureux</div>
+<div><span class="fact-label">Objectif</span>Ingénieur R&amp;D IA / maths / statistiques</div>
+</div>
+</div>
+</section>
 
-    <!-- HERO -->
-    <div class="hero" id="hero">
-      <div>
-        <div class="hero-label">Étudiant Ingénieur · ENSEEIHT Toulouse</div>
-        <h1 class="hero-name">Othmane<br><span>Chaoui</span><br>Kouraichi</h1>
-        <p class="hero-desc">
-          Passionné par les mathématiques appliquées, le machine learning et la vision par ordinateur. Je construis des pipelines intelligents, de la donnée brute au modèle déployé.
-        </p>
-        <div class="hero-tags">
-          <span class="hero-tag">Machine Learning</span>
-          <span class="hero-tag">Computer Vision</span>
-          <span class="hero-tag">Deep Learning</span>
-          <span class="hero-tag">Python</span>
-          <span class="hero-tag">PCA</span>
-          <span class="hero-tag">CNN</span>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="hero-photo">🎓</div>
-        <div class="hero-status">
-          <span class="dot"></span>
-          <span>Ouvert aux stages</span>
-        </div>
-      </div>
-    </div>
+<section id="ppp" class="fade-up">
+<div class="section-header"><span class="section-number">02</span><h2 class="section-title">Projet professionnel (PPP)</h2></div>
 
-    <!-- ABOUT -->
-    <section id="about" class="fade-up">
-      <div class="section-header">
-        <span class="section-number">01</span>
-        <h2 class="section-title">À propos</h2>
-      </div>
-      <div class="about-grid">
-        <div class="about-text">
-          <p>Je suis <strong>Othmane Chaoui Kouraichi</strong>, étudiant marocain en deuxième année à <strong>ENSEEIHT Toulouse</strong>, grande école d'ingénieurs en informatique et télécommunications.</p>
-          <p>Après deux années de classe préparatoire intensive au Maroc, j'ai intégré l'N7 où je prépare un diplôme d'ingénieur avec pour objectif l'option <strong>modIA</strong> — un double diplôme Sciences du Numérique & Mathématiques Appliquées.</p>
-          <p>Je m'intéresse particulièrement à la réduction de dimensionnalité, aux réseaux de neurones convolutifs et à l'application de l'IA aux diagnostics médicaux. En dehors du code, je cours avec le club <strong>Run7</strong> et participe à des compétitions algorithmiques.</p>
-        </div>
-        <div class="about-facts">
-          <div class="fact">
-            <span class="fact-label">Formation</span>
-            <span class="fact-value">ENSEEIHT — Informatique & Télécommunications</span>
-          </div>
-          <div class="fact">
-            <span class="fact-label">Localisation</span>
-            <span class="fact-value">Toulouse, France 🇫🇷</span>
-          </div>
-          <div class="fact">
-            <span class="fact-label">Origine</span>
-            <span class="fact-value">Maroc 🇲🇦</span>
-          </div>
-          <div class="fact">
-            <span class="fact-label">Langues</span>
-            <span class="fact-value">Arabe · Français · Anglais · notions d'Allemand </span>
-          </div>
-          <div class="fact">
-            <span class="fact-label">Objectif</span>
-            <span class="fact-value">Ingénieur IA / Recherche en ML</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<h3 class="sub">Mes 3 scénarios de carrière</h3>
+<div class="grid3">
+<div class="card hl"><div class="plan-letter">A</div><div class="card-title" style="margin-top:8px">Ingénieur R&amp;D · IA / maths / stats</div>
+<p>Mon scénario principal. Appliquer l'IA et les statistiques à des problèmes réels, en priorité biomédicaux.</p>
+<p><strong>Test à bas coût :</strong> stage d'été en laboratoire de recherche (maths / IA) pour savoir si la recherche me plaît.</p></div>
+<div class="card"><div class="plan-letter">B</div><div class="card-title" style="margin-top:8px">Data analytics / Quant</div>
+<p>Valoriser mon socle en probabilités, statistiques et optimisation dans la donnée ou la finance de marché.</p>
+<p><strong>Test à bas coût :</strong> hackathons data (Action Logement) et échanges avec des consultants data/IA.</p></div>
+<div class="card"><div class="plan-letter">C</div><div class="card-title" style="margin-top:8px">Entrepreneur · coffee shop</div>
+<p>Après un parcours académique exigeant, me prouver autrement : créer et gérer ma propre activité.</p>
+<p><strong>Test à bas coût :</strong> étudier un modèle économique de café, explorer le statut étudiant-entrepreneur (SNEE).</p></div>
+</div>
 
-    <!-- SKILLS -->
-    <section id="skills" class="fade-up">
-      <div class="section-header">
-        <span class="section-number">02</span>
-        <h2 class="section-title">Compétences</h2>
-      </div>
-      <div class="skills-grid">
-        <div class="skill-group">
-          <div class="skill-group-title">IA & ML</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Machine Learning</span>
-            <span class="skill-pill">Deep Learning</span>
-            <span class="skill-pill">CNN</span>
-            <span class="skill-pill">PCA</span>
-            <span class="skill-pill">Computer Vision</span>
-            <span class="skill-pill">Scikit-learn</span>
-            <span class="skill-pill">PyTorch</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Programmation</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Python</span>
-            <span class="skill-pill">C </span>
-            <span class="skill-pill">Java</span>
-            <span class="skill-pill">SQL</span>
-            <span class="skill-pill">MATLAB</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Maths & Algo</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Algèbre linéaire</span>
-            <span class="skill-pill">Statistiques</span>
-            <span class="skill-pill">Optimisation</span>
-            <span class="skill-pill">Algorithmique</span>
-            <span class="skill-pill">Complexité</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Outils</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Git / GitHub</span>
-            <span class="skill-pill">NumPy</span>
-            <span class="skill-pill">Pandas</span>
-            <span class="skill-pill">Matplotlib</span>
-            <span class="skill-pill">Jupyter</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Réseaux & Sys.</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Linux</span>
-            <span class="skill-pill">TCP/IP</span>
-            <span class="skill-pill">Réseaux</span>
-            <span class="skill-pill">Sys. embarqués</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Soft Skills</div>
-          <div class="skill-pills">
-            <span class="skill-pill">Communication</span>
-            <span class="skill-pill">Travail d'équipe</span>
-            <span class="skill-pill">Pédagogie</span>
-            <span class="skill-pill">Rigueur</span>
-            <span class="skill-pill">Curiosité</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<h3 class="sub">Démarche design thinking</h3>
+<div class="define"><small>Define — mon point de vue</small>« En tant que futur ingénieur HPC &amp; Big Data, j'ai besoin de tester concrètement la recherche, l'analyse de données et l'entrepreneuriat, car je dois choisir ma voie avant mon stage de fin d'études. »</div>
+<div class="grid3" style="margin-top:20px">
+<div class="card"><div class="card-title">Empathize · Imane Soussi Tanani</div><p>Alumna N7 (département électrique), Solutions Consultant à Paris. Regard sur le parcours d'une ingénieure internationale en France.</p>
+<!-- À COMPLÉTER : 2-3 enseignements de l'entretien --></div>
+<div class="card"><div class="card-title">Empathize · Othmane Slaoui</div><p>Alumni INSA, consultant IA et chef de projet. Regard sur le lien entre IA appliquée, conseil et gestion de projet (plan B).</p>
+<!-- À COMPLÉTER : 2-3 enseignements de l'entretien --></div>
+<div class="card"><div class="card-title">Empathize · Youssef Karouma</div><p>Alumni Centrale Lyon, doctorant en dernière année (thèse CIFRE chez Schaeffler). Regard sur la recherche en lien avec l'industrie (plan A).</p>
+<!-- À COMPLÉTER : 2-3 enseignements de l'entretien --></div>
+</div>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="fade-up">
-      <div class="section-header">
-        <span class="section-number">03</span>
-        <h2 class="section-title">Projets</h2>
-      </div>
-      <div class="projects-list">
+<h3 class="sub">Secteurs, stage et mobilité</h3>
+<div class="grid3">
+<div class="card"><div class="card-title">Secteurs ciblés</div><p>Laboratoires médicaux et biomédicaux : mettre l'IA et les maths au service de la santé. Recherche en mathématiques envisagée.</p></div>
+<div class="card"><div class="card-title">Prochain stage</div><p>Stage d'été de 3–4 mois (2027) en IA / optimisation, idéalement en laboratoire de recherche pour tester ce métier.</p></div>
+<div class="card"><div class="card-title">Mobilité internationale</div><p>PFE à l'étranger, de préférence en Allemagne ou en Autriche. J'apprends l'allemand (A2) pour m'y préparer.</p></div>
+</div>
 
-        <div class="project-item">
-          <div>
-            <div class="project-meta">TIPE · Recherche Appliquée</div>
-            <div class="project-name"> Reconnaissance faciale par Analyse en Composantes Principales (ACP)</div>
-            <div class="project-desc">
-             Étude mathématique et implémentation de l'ACP comme outil de réduction de dimensionnalité appliqué à la reconnaissance faciale. À partir de données faciales brutes, j'ai construit un espace de représentation réduit (eigenfaces), analysé les distances dans cet espace et évalué les performances de classification selon le nombre de composantes retenues.
-            </div>
-            <div class="project-tags">
-              <span class="project-tag">Python</span>
-              <span class="project-tag">PCA</span>
-              <span class="project-tag">CNN</span>
-              <span class="project-tag">PyTorch</span>
-              <span class="project-tag">NumPy</span>
-              <span class="project-tag">Algèbre linéaire</span>
-            </div>
-          </div>
-          <div class="project-year">2024-2025</div>
-        </div>
+<h3 class="sub">Documents</h3>
+<a class="btn" href="cv_stages_2027.pdf" target="_blank">CV (PDF)</a>
+<!-- AJOUTER : lettre de motivation, compte rendu d'entretiens, résultats MBTI, PPT de 6 à 8 diapositives -->
+</section>
 
-        <div class="project-item">
-          <div>
-            <div class="project-meta">Compétition · Algorithmique</div>
-            <div class="project-name">Thales BattleDev</div>
-            <div class="project-desc">
-              Résolution de défis algorithmiques chronométrés en équipe. Renforcement des compétences en structures de données, optimisation et pensée critique sous contrainte de temps.
-            </div>
-            <div class="project-tags">
-              <span class="project-tag">Algorithmique</span>
-              <span class="project-tag">Python</span>
-              <span class="project-tag">Compétition</span>
-            </div>
-          </div>
-          <div class="project-year">2025</div>
-        </div>
+<section id="skills" class="fade-up">
+<div class="section-header"><span class="section-number">03</span><h2 class="section-title">Compétences</h2></div>
+<div class="grid3">
+<div class="card"><div class="card-title">Data / ML</div><div class="pills"><span class="pill">Analyse de données</span><span class="pill">Évaluation de modèles</span><span class="pill">ACP</span><span class="pill">K-NN</span><span class="pill">SVD</span></div></div>
+<div class="card"><div class="card-title">Programmation</div><div class="pills"><span class="pill">Python</span><span class="pill">NumPy</span><span class="pill">OpenCV</span><span class="pill">Pandas (notions)</span><span class="pill">C</span><span class="pill">Ada</span><span class="pill">MATLAB</span></div></div>
+<div class="card"><div class="card-title">Maths</div><div class="pills"><span class="pill">Algèbre linéaire</span><span class="pill">Probabilités &amp; stats</span><span class="pill">Optimisation numérique</span><span class="pill">Analyse matricielle</span></div></div>
+<div class="card"><div class="card-title">Cursus HPC &amp; Big Data</div><div class="pills"><span class="pill">Systèmes concurrents &amp; distribués</span><span class="pill">Programmation fonctionnelle</span><span class="pill">Théorie des graphes</span><span class="pill">Calcul haute performance (à venir)</span><span class="pill">Statistical ML (à venir)</span></div></div>
+<div class="card"><div class="card-title">Outils</div><div class="pills"><span class="pill">Git / GitHub</span><span class="pill">Jupyter</span><span class="pill">Linux</span><span class="pill">VS Code</span></div></div>
+<div class="card"><div class="card-title">Soft skills</div><div class="pills"><span class="pill">Travail d'équipe</span><span class="pill">Patience</span><span class="pill">Résilience</span><span class="pill">Intelligence émotionnelle</span></div></div>
+</div>
+</section>
 
-        <div class="project-item">
-          <div>
-            <div class="project-meta">Engagement · Éducation</div>
-            <div class="project-name">Tutorat bénévole en mathématiques</div>
-            <div class="project-desc">
-              Accompagnement de lycéens et d'étudiants juniors en mathématiques. Développe la capacité à expliquer des concepts techniques complexes avec clarté et pédagogie.
-            </div>
-            <div class="project-tags">
-              <span class="project-tag">Pédagogie</span>
-              <span class="project-tag">Mathématiques</span>
-              <span class="project-tag">Engagement civique</span>
-            </div>
-          </div>
-          <div class="project-year">2023–2025</div>
-        </div>
-		
-		<div class="project-item">
-          <div>
-            <div class="project-meta">Hackathon · ENAC Toulouse</div>
-            <div class="project-name">FlyImpulse — Hackathon aéronautique à l'ENAC</div>
-            <div class="project-desc">
-              Participation au hackathon FlyImpulse organisé à l'École Nationale de l'Aviation Civile (ENAC) de Toulouse. En équipe et sous contrainte de temps, nous avons travaillé sur une problématique liée à l'industrie aéronautique, en mobilisant des compétences en algorithmique, modélisation et travail collaboratif.
-            </div>
-            <div class="project-tags">
-              <span class="project-tag">Aéronautique</span>
-              <span class="project-tag">Travail d'équipe</span>
-              <span class="project-tag">Hackathon</span>
-            </div>
-          </div>
-          <div class="project-year">2026</div>
-        </div>
+<section id="projects" class="fade-up">
+<div class="section-header"><span class="section-number">04</span><h2 class="section-title">Projets &amp; engagements</h2></div>
 
-      </div>
-    </section>
+<div class="item"><div><div class="meta">Hackathon · ENSEEIHT</div><div class="name">Hackathon IA — Action Logement</div>
+<div class="desc">Anticipation des besoins en équipements à l'échelle de l'agglomération toulousaine : modélisation d'un problème de prédiction en équipe, en moins de 24 h, puis restitution devant un jury de cadres d'Action Logement.</div>
+<div class="tags"><span class="tag">Python</span><span class="tag">Prédiction</span><span class="tag">Travail d'équipe</span></div></div><div class="year">Oct. 2026</div></div>
 
-    <!-- EXPERIENCE -->
-    <section id="experience" class="fade-up">
-      <div class="section-header">
-        <span class="section-number">04</span>
-        <h2 class="section-title">Formation & Expériences</h2>
-      </div>
-      <div class="exp-list">
+<div class="item"><div><div class="meta">TIPE · Recherche appliquée</div><div class="name">Reconnaissance faciale par ACP (Eigenfaces)</div>
+<div class="desc">Pipeline de traitement d'images from scratch : centrage, matrice de covariance, décomposition propre, projection dans l'espace Eigenfaces. Classification k-NN, comparaison des distances (L2, cosinus) et impact du nombre de composantes sur la précision. Résultats présentés devant un jury académique (France &amp; Maroc).</div>
+<div class="tags"><span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">OpenCV</span><span class="tag">k-NN</span><span class="tag">Algèbre linéaire</span></div></div><div class="year">2024-2025</div></div>
 
-        <div class="exp-item">
-          <div class="exp-date">2025 — Présent</div>
-          <div>
-            <div class="exp-role">Étudiant Ingénieur — Informatique & Télécommunications</div>
-            <div class="exp-org">ENSEEIHT · Toulouse, France</div>
-            <div class="exp-desc">Formation d'ingénieur spécialisée en informatique et télécommunications. Projets en algorithmique avancée, réseaux, systèmes, machine learning. Préparation à l'option modIA pour un double diplôme Sciences du Numérique & Maths Appliquées.</div>
-          </div>
-        </div>
+<div class="item"><div><div class="meta">Hackathon · ENAC Toulouse</div><div class="name">FlyImpulse — Aviation durable</div>
+<div class="desc">Compétition inter-écoles : optimisation d'itinéraires et modélisation de l'impact CO₂, en équipe pluridisciplinaire.</div>
+<div class="tags"><span class="tag">Optimisation</span><span class="tag">Aéronautique</span><span class="tag">Hackathon</span></div></div><div class="year">2026</div></div>
 
-        <div class="exp-item">
-          <div class="exp-date">2023 — 2025</div>
-          <div>
-            <div class="exp-role">Classe Préparatoire aux Grandes Écoles (MPSI / MP*)</div>
-            <div class="exp-org">Maroc</div>
-            <div class="exp-desc">Deux années de formation intensive en mathématiques, physique et informatique. Développement d'une rigueur analytique et d'une forte capacité de travail. Admission à l'ENSEEIHT sur concours national.</div>
-          </div>
-        </div>
+<div class="item"><div><div class="meta">Compétition · Algorithmique</div><div class="name">Thales BattleDev</div>
+<div class="desc">Résolution de problèmes algorithmiques complexes sous contrainte de temps.</div>
+<div class="tags"><span class="tag">Algorithmique</span><span class="tag">Python</span></div></div><div class="year">2025</div></div>
 
-        <div class="exp-item">
-          <div class="exp-date">2025 — Présent</div>
-          <div>
-            <div class="exp-role">Membre — Club de course Run7</div>
-            <div class="exp-org">ENSEEIHT · Toulouse</div>
-            <div class="exp-desc">Entraînements 2–3 fois par semaine, préparation aux courses collectives. Discipline, gestion du stress et concentration — qualités directement transposables à l'ingénierie.</div>
-          </div>
-        </div>
+<div class="item"><div><div class="meta">Engagement · Éducation</div><div class="name">Tutorat bénévole en mathématiques</div>
+<div class="desc">Accompagnement de plus de 10 élèves, avec une amélioration moyenne des résultats de +15 %.</div>
+<div class="tags"><span class="tag">Pédagogie</span><span class="tag">Engagement civique</span></div></div><div class="year">2023–2025</div></div>
 
-      </div>
-    </section>
+<div class="item"><div><div class="meta">Engagement · Inclusion &amp; langues</div><div class="name">Bénévolat universitaire</div>
+<div class="desc"><ul><li>Tuteur de langues dans des cafés des langues (UniverSEH).</li><li>Surveillance d'examens pour étudiants en situation de handicap à l'Université Paul Sabatier.</li></ul></div>
+<div class="tags"><span class="tag">Inclusion</span><span class="tag">Interculturel</span></div></div><div class="year">En cours</div></div>
+</section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="fade-up">
-      <div class="section-header">
-        <span class="section-number">05</span>
-        <h2 class="section-title">Contact</h2>
-      </div>
-      <div class="contact-grid">
-        <div>
-          <div class="contact-cta">Travaillons<br>ensemble.</div>
-          <p class="contact-sub">
-            Je recherche activement un stage en machine learning, vision par ordinateur, data science ou ingénierie logicielle. N'hésitez pas à me contacter pour toute opportunité ou collaboration.
-          </p>
-        </div>
-        <div class="contact-links">
-          <a class="contact-link" href="mailto:othmane.chaouikouraichi@etu.inp-n7.fr">
-            <div class="contact-link-icon">📧</div>
-            <div class="contact-link-text">
-              <span class="contact-link-label">Email</span>
-              <span class="contact-link-value">othmane.chaouikouraichi@etu.inp-n7.fr</span>
-            </div>
-          </a>
-          <a class="contact-link" href="https://www.linkedin.com/in/othmane-chaoui-kouraichi" target="_blank">
-            <div class="contact-link-icon">💼</div>
-            <div class="contact-link-text">
-              <span class="contact-link-label">LinkedIn</span>
-              <span class="contact-link-value">othmane-chaoui-kouraichi</span>
-            </div>
-          </a>
-          <a class="contact-link" href="https://github.com/chaouiothmane" target="_blank">
-            <div class="contact-link-icon">⚡</div>
-            <div class="contact-link-text">
-              <span class="contact-link-label">GitHub</span>
-              <span class="contact-link-value">github.com/chaouiothmane</span>
-            </div>
-          </a>
-          <div class="contact-link" style="cursor:default;">
-            <div class="contact-link-icon">📞</div>
-            <div class="contact-link-text">
-              <span class="contact-link-label">Téléphone</span>
-              <span class="contact-link-value">+33 7 66 08 49 28</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<section id="experience" class="fade-up">
+<div class="section-header"><span class="section-number">05</span><h2 class="section-title">Parcours</h2></div>
+<div class="exp"><div class="exp-date">Été 2026 · 1 mois</div><div><div class="exp-role">Stage — Organisation des oraux du concours CCINP</div><div class="exp-org">Services du CCINP · Lycée Voltaire, Paris</div><div class="desc">Aide à l'organisation des épreuves orales du concours : logistique, coordination avec les équipes et accueil des candidats.</div></div></div>
+<div class="exp"><div class="exp-date">2025 — 2028</div><div><div class="exp-role">Cycle ingénieur — Sciences du Numérique</div><div class="exp-org">ENSEEIHT, Toulouse INP · Spécialité 2A : HPC &amp; Big Data</div><div class="desc">Analyse de données, statistiques, algorithmes, optimisation, probabilités, Python, C, MATLAB.</div></div></div>
+<div class="exp"><div class="exp-date">2023 — 2025</div><div><div class="exp-role">CPGE MP — Mathématiques &amp; Physique</div><div class="exp-org">Lycée Moulay Youssef, Rabat</div><div class="desc">Classé top 15 %. Formation intensive : algèbre linéaire, analyse, probabilités, algorithmique.</div></div></div>
+<div class="exp"><div class="exp-date">2025 — Présent</div><div><div class="exp-role">Membre — Club de course Run7</div><div class="exp-org">ENSEEIHT · Toulouse</div><div class="desc">Entraînements réguliers : discipline, gestion du stress et persévérance.</div></div></div>
+</section>
 
-  </main>
+<section id="contact" class="fade-up">
+<div class="section-header"><span class="section-number">06</span><h2 class="section-title">Contact</h2></div>
+<div class="contact-grid">
+<div><div class="contact-cta">Travaillons<br>ensemble.</div>
+<p class="contact-sub">Je recherche un stage d'été de 3 à 4 mois en IA, optimisation ou data science, idéalement en laboratoire de recherche.</p>
+<a class="btn" href="cv_stages_2027.pdf" target="_blank">Télécharger mon CV</a></div>
+<div class="contact-links">
+<a class="contact-link" href="mailto:othmane.chaouikouraichi@etu.toulouse-inp.fr"><div class="ico">📧</div><div><small>Email</small>othmane.chaouikouraichi@etu.toulouse-inp.fr</div></a>
+<a class="contact-link" href="https://www.linkedin.com/in/othmane-chaoui-kouraichi" target="_blank"><div class="ico">💼</div><div><small>LinkedIn</small>othmane-chaoui-kouraichi</div></a>
+<a class="contact-link" href="https://github.com/chaouiothmane" target="_blank"><div class="ico">⚡</div><div><small>GitHub</small>github.com/chaouiothmane</div></a>
+</div></div>
+</section>
+</main>
 
-  <footer>
-    <span>© 2025 Othmane Chaoui Kouraichi</span>
-    <span>Conçu avec soin · Toulouse, France</span>
-  </footer>
+<footer><span>© 2026 Othmane Chaoui Kouraichi</span><span>Toulouse, France</span></footer>
 
-  <script>
-    // Active nav on scroll
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navLinks.forEach(a => {
-            a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
-          });
-        }
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
-
-    // Fade-up on scroll
-    const fadeObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.07 });
-    document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
-  </script>
+<script>
+const links=document.querySelectorAll('.nav-links a');
+new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-40% 0px -55% 0px'}).observe&&document.querySelectorAll('section[id]').forEach(s=>new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-40% 0px -55% 0px'}).observe(s));
+const f=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.07});
+document.querySelectorAll('.fade-up').forEach(el=>f.observe(el));
+</script>
 </body>
 </html>
